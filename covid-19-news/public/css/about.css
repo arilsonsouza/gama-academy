@@ -30,8 +30,22 @@
 	line-height: 1.5em;
 	font-weight: 500;
 	text-align: justify;
+	padding: 0 1em;
 }
 
 .hero__title-wrapper--about span {
 	font-weight: 600;
+}
+
+.social__links {
+	display: flex;
+	justify-content: center;
+	padding: 0 2em;
+	align-items: center;
+}
+
+.social__link {
+	font-size: 2em;
+	margin: 0 1em;
+	color: #FFF;
 }
