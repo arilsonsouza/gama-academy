@@ -6,6 +6,9 @@
 	box-sizing: border-box;
 }
 
+html, body {
+	height: 100%;
+}
 body {	
 	font-family: 'Open Sans', sans-serif;	
 }
@@ -40,6 +43,7 @@ a {
 	justify-content: space-between;
 	align-items: center;
 	width: 100%;
+	background-color: #eff6ff;
 }
 
 .hero__navbar .container {
