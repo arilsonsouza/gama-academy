@@ -19,13 +19,9 @@ a {
 .container {
 	width: 100%;
 	margin: 0 auto;
+	max-width: 960px;
 }
 
-@media screen and (min-width: 728px) {
-	.container {
-		width: 728px;
-	}
-}
 
 .hero {
 	background-image: url('../images/slide-b.jpg');
@@ -81,4 +77,59 @@ a {
 
 .navbar_link a:hover {
 	color: #c080da;
+}
+
+main {
+	padding-top: 2em;
+}
+
+.posts {
+	display: flex;
+	flex-direction: column;
+}
+
+.post {
+	display: flex;
+	justify-content: space-between;
+	border-top: 1px solid #CCC;
+	padding: 1em 0;
+}
+
+.post__image-wrapper {
+	width: 300px;
+}
+
+.post__image-wrapper a {
+	width: 100%;
+}
+
+.post__image-wrapper img {
+	border-radius: 8px;
+	height: 100%;
+  width: 300px;
+}
+
+.post__description {
+	padding: 0 1em;
+}
+.post__description h4 {
+	text-align: left;
+	font-size: 16px;
+}
+
+.post__description p {
+	color: #495057;
+	text-align: justify;
+}
+
+.videos {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+}
+
+.video__wrapper {
+	border-top: 1px solid #CCC;
+	padding: 1em 0;
+	flex: 1;
 }
