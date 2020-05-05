@@ -28,6 +28,7 @@ a {
 
 .hero {
 	background-image: url('../images/slide-b.jpg');
+	background-attachment: fixed;
 	background-size: cover;
 	background-position: center;
 	width: 100%;
