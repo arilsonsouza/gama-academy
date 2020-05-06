@@ -8,14 +8,20 @@
   let pages = []
   const itmes = []
 
+  const itemsWapper = document.getElementById('items')
+  const spinnerWrapper = document.getElementById('spinner')
+  const mainContainer = document.querySelector('.main')
+
   const fetchData = async () => {
     const API_URL = 'https://api.sheety.co/30b6e400-9023-4a15-8e6c-16aa4e3b1e72'
-    let data = []
+    let data = []    
     try {
       loading = true
       const response = await fetch(API_URL)
       data = await response.json()
-      data.forEach(item => item.score = (Math.random() * (5 - 1) + 1).toFixed(1))        
+      data.forEach(item => item.score = (Math.random() * (5 - 1) + 1).toFixed(1))
+      mainContainer.style.visibility = 'visible'  
+      spinnerWrapper.style.display = 'none'      
     } catch (err) {
       error = true
     } finally {
@@ -68,7 +74,6 @@
     </div>`
     });
 
-    const itemsWapper = document.getElementById('items')
     itemsWapper.innerHTML = template
   }
 

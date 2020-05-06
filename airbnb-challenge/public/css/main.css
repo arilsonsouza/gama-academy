@@ -57,6 +57,7 @@ a {
 
 .main {
 	padding-top: 80px;
+	visibility: hidden;
 }
 
 .main .container {
