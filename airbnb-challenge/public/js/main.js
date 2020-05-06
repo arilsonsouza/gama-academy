@@ -19,6 +19,53 @@
     return data
   }
 
+  const floatToCurrency = value => Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value)
+
+  const render = (elements) => {
+    let template = ''
+
+    elements.forEach(({photo, property_type, name, price}) => {
+      template += `<div class="item">
+      <div class="item__image">
+        <a href="#">
+          <img src="${photo}" alt="${name}">
+        </a>
+      </div>
+
+      <div class="item__info">
+        <header class="item__info__header">
+          <div class="header__info__wrapper">
+            <span class="item__type">
+              ${property_type}
+            </span>
+            <a href="#" class="item__name">
+              ${name}
+            </a>                  
+          </div>
+
+          <div class="header__info__icon">
+            <i class="fa fa-heart" aria-hidden="true"></i>
+          </div>
+        </header>              
+        <div class="item__content">
+          <span>
+            3 hóspedes . 1 quarto . 1 cama . 1 banheiro compartilhado <br>
+            Wifi . Cozinha
+          </span>
+        </div>
+
+        <div class="item__info__footer">
+          <span class="item__score"><i class="fa fa-heart" aria-hidden="true"></i>4.8</span>
+          <span class="item__price"><strong>${floatToCurrency(price)}</strong>/noite</span>
+        </div>
+      </div>
+    </div>`
+    });
+
+    const itemsWapper = document.getElementById('items')
+    itemsWapper.innerHTML = template
+  }
+
   const homes = await fetchData()
-  console.log('DATA: ', homes)
+  render(homes)
 })()
