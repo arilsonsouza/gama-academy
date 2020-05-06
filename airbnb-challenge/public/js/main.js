@@ -2,6 +2,11 @@
 
   let loading = false
   let error = false
+  let currentPage = 1
+  let  collectionLength = 0
+  let rowsPerPage = 4
+  let pages = []
+  const itmes = []
 
   const fetchData = async () => {
     const API_URL = 'https://api.sheety.co/30b6e400-9023-4a15-8e6c-16aa4e3b1e72'
@@ -9,7 +14,8 @@
     try {
       loading = true
       const response = await fetch(API_URL)
-      data = await response.json()        
+      data = await response.json()
+      data.forEach(item => item.score = (Math.random() * (5 - 1) + 1).toFixed(1))        
     } catch (err) {
       error = true
     } finally {
@@ -24,7 +30,7 @@
   const render = (elements) => {
     let template = ''
 
-    elements.forEach(({photo, property_type, name, price}) => {
+    elements.forEach(({photo, property_type, name, price, score}) => {
       template += `<div class="item">
       <div class="item__image">
         <a href="#">
@@ -55,7 +61,7 @@
         </div>
 
         <div class="item__info__footer">
-          <span class="item__score"><i class="fa fa-heart" aria-hidden="true"></i>4.8</span>
+          <span class="item__score"><i class="fa fa-heart" aria-hidden="true"></i>${score}</span>
           <span class="item__price"><strong>${floatToCurrency(price)}</strong>/noite</span>
         </div>
       </div>
@@ -66,6 +72,67 @@
     itemsWapper.innerHTML = template
   }
 
-  const homes = await fetchData()
-  render(homes)
+  const navigate = evt => {     
+    currentPage = parseInt(evt.target.dataset.pagenumber) 
+    updateDOM()
+  }
+
+  const renderPages = () => {
+    let paginationTemplate = ''
+
+    pages.forEach(page => {
+      paginationTemplate += page === '...' ? 
+      `<li class="pagination-item-disabled"> ${page} </li>` : 
+      `<li 
+          class="pagination-item ${ page === currentPage ? 'current-page-item' : 'page-item' }"
+          data-pageNumber=${page}>${page}</li>`
+
+    })
+
+    if (collectionLength > 0) {
+
+      if (currentPage !== 1) {
+        paginationTemplate = `<li 
+            class="prev-page pagination-item"
+            data-pageNumber=${currentPage - 1}>
+              <i class="fa fa-angle-left" data-pageNumber=${currentPage - 1} ></i>
+          </li>` + paginationTemplate
+      }
+
+      if (currentPage !== pages[pages.length - 1]) {
+        paginationTemplate += `<li 
+            class="next-page pagination-item"
+            data-pageNumber=${currentPage + 1}>
+              <i class="fa fa-angle-right" data-pageNumber=${currentPage + 1} ></i>
+        </li>`
+      }
+        
+    }
+      
+    document.getElementById('pagination').innerHTML = paginationTemplate
+    
+    document.querySelectorAll('li.next-page, li.prev-page').forEach(el => {
+      el.addEventListener('click', navigate)
+    })
+
+    document.querySelectorAll('.page-item').forEach(el => {
+      el.addEventListener('click', navigate)
+    })
+  }
+
+  function paginate() {    
+    return items.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+  }
+
+  const updateDOM = () => {
+    pages = generatePagesArray(currentPage, collectionLength, rowsPerPage)
+    render(paginate())
+    renderPages()    
+  }
+
+  items = await fetchData()
+  collectionLength = items.length  
+
+  updateDOM()
+
 })()
