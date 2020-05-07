@@ -21,6 +21,11 @@
   const mainContainer = document.querySelector('.main')
   const searchInput = document.getElementById('searchInput')
   const searchButton = document.getElementById('searchButton')
+  const resetButton = document.getElementById('resetButton')
+
+  resetButton.addEventListener('click', () => {
+    updateDOM(items)
+  })
 
   searchButton.addEventListener('click', () => {    
     searchQuery = searchInput.value
@@ -34,7 +39,6 @@
     }
 
     updateDOM(filteredItems)
-    console.log('FILTERED ITEMS: ', filteredItems)
   })
 
   const datepikerOptions = {

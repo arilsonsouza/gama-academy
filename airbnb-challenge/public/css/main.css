@@ -104,10 +104,14 @@ a {
 .search__wrapper input{
 	flex: 1;
 }
+
 .search__wrapper i {
 	cursor: pointer;
 }
 
+.search__wrapper i:last-child {
+	margin-left: .5em;
+}
 .main {
 	padding-top: 80px;
 	visibility: hidden;
