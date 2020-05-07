@@ -68,7 +68,7 @@
     if( checkIn && checkOut) {
       const quantityOfDays = getDifferenceBetweenDates(checkIn, checkOut)
       lengthOfStay = quantityOfDays >= 1 ? quantityOfDays : 1
-      updateDOM(items)
+      updateDOM((searchQuery) ? filteredItems : items)
     }
   }
   const fetchData = async () => {
@@ -85,9 +85,7 @@
           score,
           ...locations[index]
         }
-      })
-
-      console.log('ITEMS: ', data)
+      })      
       mainContainer.style.visibility = 'visible'  
       spinnerWrapper.style.display = 'none'      
     } catch (err) {
@@ -145,7 +143,7 @@
 
   const navigate = evt => {     
     currentPage = parseInt(evt.target.dataset.pagenumber) 
-    updateDOM((searchQuery && pages.length > 1) ? filteredItems : items)
+    updateDOM((searchQuery) ? filteredItems : items)
   }
 
   const renderPages = () => {
