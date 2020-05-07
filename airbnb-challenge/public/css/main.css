@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
-@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css');
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
 *,
 *:after,
@@ -14,6 +14,7 @@ html, body {
 body {	
 	font-family: 'Open Sans', sans-serif;	
 	font-size: 12px;
+	height: 100%;
 }
 
 a {
@@ -24,6 +25,7 @@ a {
 
 .container {
 	width: 100%;
+	height: 100%;
 	margin: 0 auto;
 }
 
@@ -48,20 +50,66 @@ a {
 
 .navbar .container {
 	display: flex;
-	justify-content: center;
+	max-width: 1200px;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .navbar .container .logo {
 	height: 80px;
 }
 
+.navbar__options {
+	display: flex;
+	align-items: center;
+}
+
+.datepikers,
+.datepiker__wrapper,
+.search__wrapper{
+	display: flex;
+	align-items: center;
+}
+
+.datepiker__wrapper,
+.search__wrapper {
+	padding: 0 .5em;
+	border: 1px solid #CCC;
+	margin-left: .5em;
+	height: 35px;
+	border-radius: 4px;	
+}
+
+.datepiker__wrapper input,
+.search__wrapper input{
+	border: none;
+	color: #717171;
+	font-weight: 500;
+	font-size: 1.2em;
+	height: 100%;
+	outline: none;
+}
+
+.datepiker__wrapper i,
+.search__wrapper i {
+	color: #717171;
+	font-size: 1.2em;
+}
+
+.search__wrapper i {
+	cursor: pointer;
+}
+
 .main {
 	padding-top: 80px;
 	visibility: hidden;
+	height: 100%;
 }
 
 .main .container {
 	padding: 15px;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .items__wrapper {
@@ -127,6 +175,16 @@ a {
 	flex: 1;
 }
 
+.header__info__wrapper .item__location {
+	font-size: 1.2em;
+	font-weight: 500;
+  color: rgba(113, 113, 113, 1);
+}
+
+.header__info__wrapper .item__location b{
+	color: #000;
+}
+
 .item__info .header__info__icon {
 	padding: 0 0 0 1em;
 	color: rgb(113, 113, 113);
@@ -153,25 +211,35 @@ a {
 }
 
 .item__info__footer .item__score {
-	font-size: 1.5em;
+	font-size: 1.3em;
 	color: rgb(0, 0, 0);
 	font-weight: bold;
+	display: flex;
+	align-items: flex-end;
 }
 
 .item__info__footer .item__score i {
 	color: #FF385C;
-	font-size: 1.2em;
+	font-size: .9em;
+	margin-bottom: .3em;
 }
 
 .item__info__footer .item__price {
 	font-size: 1.5em;
 	color: #000;
-	color: rgb(113, 113, 113);
+	color: #222222;
 }
 
 .item__info__footer .item__price strong {
 	font-weight: 600;
 	color: #000;
+}
+
+.item__total__price {
+	display: flex;
+	justify-content: flex-end;
+	font-size: .8em;
+	text-decoration: underline;
 }
 
 /* PAGINATIO */
@@ -252,8 +320,18 @@ a {
 	}
 }
 
+.map__wrapper {
+	width: 100%;
+  padding-left: 1em;
+}
+
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px){ 
+	.map__wrapper {
+		width: 60%;
+		padding-left: 1em;
+	}
+
 	.items__wrapper {
 		width: 40%;
 	}

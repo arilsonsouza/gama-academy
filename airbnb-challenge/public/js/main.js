@@ -3,15 +3,70 @@
   let loading = false
   let error = false
   let currentPage = 1
-  let  collectionLength = 0
+  let collectionLength = 0
   let rowsPerPage = 4
   let pages = []
-  const itmes = []
+  let lengthOfStay = 1
+  let searchQuery = null
+  const selectedDates = {
+    checkIn: null,
+    checkOut: null
+  }
+
+  let filteredItems = []
+  let items = []
 
   const itemsWapper = document.getElementById('items')
   const spinnerWrapper = document.getElementById('spinner')
   const mainContainer = document.querySelector('.main')
+  const searchInput = document.getElementById('searchInput')
+  const searchButton = document.getElementById('searchButton')
 
+  searchButton.addEventListener('click', () => {    
+    searchQuery = searchInput.value
+    
+    filteredItems = items
+    if (searchQuery) {            
+      const regExp = new RegExp(searchQuery, 'i')
+      filteredItems = filteredItems
+        .filter(item => regExp.test(item.nome))
+        .map(item =>  ({ ...item, nome: item.nome.replace(regExp, `<b>$&</b>`)}))
+    }
+
+    updateDOM(filteredItems)
+    console.log('FILTERED ITEMS: ', filteredItems)
+  })
+
+  const datepikerOptions = {
+    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
+    dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+    defaultDate: new Date()
+  }
+
+  $('#startDate').datepicker({ ...datepikerOptions, buttonText: "CHECK-IN", onSelect: (dateText) => setDate(dateText, 'checkIn')})
+  $('#endDate').datepicker({ ...datepikerOptions, buttonText: "CHECKOUT", onSelect: (dateText) => setDate(dateText, 'checkOut')})
+
+  const getDifferenceBetweenDates = (start, end) => {
+    const date1 = new Date(start);
+    const date2 = new Date(end);
+    const diffTime = Math.abs(date2 - date1);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    
+    return diffDays
+  }
+
+  const setDate = (date, key) => {
+    selectedDates[key] = date
+    const { checkIn, checkOut } = selectedDates
+    if( checkIn && checkOut) {
+      const quantityOfDays = getDifferenceBetweenDates(checkIn, checkOut)
+      lengthOfStay = quantityOfDays >= 1 ? quantityOfDays : 1
+      updateDOM(items)
+    }
+  }
   const fetchData = async () => {
     const API_URL = 'https://api.sheety.co/30b6e400-9023-4a15-8e6c-16aa4e3b1e72'
     let data = []    
@@ -19,7 +74,16 @@
       loading = true
       const response = await fetch(API_URL)
       data = await response.json()
-      data.forEach(item => item.score = (Math.random() * (5 - 1) + 1).toFixed(1))
+      data = data.map((item, index) => {
+        let score = (Math.random() * (5 - 1) + 1).toFixed(1)
+        return {
+          ...item,
+          score,
+          ...locations[index]
+        }
+      })
+
+      console.log('ITEMS: ', data)
       mainContainer.style.visibility = 'visible'  
       spinnerWrapper.style.display = 'none'      
     } catch (err) {
@@ -31,12 +95,14 @@
     return data
   }
 
-  const floatToCurrency = value => Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value)
-
   const render = (elements) => {
     let template = ''
 
-    elements.forEach(({photo, property_type, name, price, score}) => {
+    const mappoints = elements.map(({name, nome, price, latitude, longitude, estado: { nome: estado }}) => ({name, nome, price, latitude, longitude, estado}))
+    clearMarkers()
+    createMapMarkers(mappoints)
+
+    elements.forEach(({photo, property_type, name, price, score, nome,  estado: { nome: estado }}) => {
       template += `<div class="item">
       <div class="item__image">
         <a href="#">
@@ -52,23 +118,19 @@
             </span>
             <a href="#" class="item__name">
               ${name}
-            </a>                  
+            </a>
+            <span class="item__location">${nome} - ${estado}</span>                  
           </div>
 
           <div class="header__info__icon">
             <i class="fa fa-heart" aria-hidden="true"></i>
           </div>
-        </header>              
-        <div class="item__content">
-          <span>
-            3 hóspedes . 1 quarto . 1 cama . 1 banheiro compartilhado <br>
-            Wifi . Cozinha
-          </span>
-        </div>
-
+        </header>
         <div class="item__info__footer">
           <span class="item__score"><i class="fa fa-heart" aria-hidden="true"></i>${score}</span>
-          <span class="item__price"><strong>${floatToCurrency(price)}</strong>/noite</span>
+          <span class="item__price"><strong>${floatToCurrency(price)}</strong>/noite
+          <br/><span class="item__total__price">Total de ${floatToCurrency(price * lengthOfStay)}</span>
+          </span>
         </div>
       </div>
     </div>`
@@ -79,7 +141,7 @@
 
   const navigate = evt => {     
     currentPage = parseInt(evt.target.dataset.pagenumber) 
-    updateDOM()
+    updateDOM((searchQuery && pages.length > 1) ? filteredItems : items)
   }
 
   const renderPages = () => {
@@ -125,19 +187,18 @@
     })
   }
 
-  function paginate() {    
-    return items.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+  function paginate(data) {    
+    return data.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
   }
 
-  const updateDOM = () => {
+  const updateDOM = (data) => {
+    collectionLength = data.length 
     pages = generatePagesArray(currentPage, collectionLength, rowsPerPage)
-    render(paginate())
+    render(paginate(data))
     renderPages()    
   }
 
-  items = await fetchData()
-  collectionLength = items.length  
-
-  updateDOM()
+  items = await fetchData()   
+  updateDOM(items)
 
 })()
