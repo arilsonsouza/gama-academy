@@ -36,8 +36,7 @@ a {
 	position: relative;
 	width: 100%;
 	z-index: 1;
-	padding: 0px 10px;
-	height: 80px;
+	padding: 0px 10px;	
 	position: fixed;
 	border-bottom: 1px solid #CCC;	
 }
@@ -51,6 +50,7 @@ a {
 .navbar .container {
 	display: flex;
 	max-width: 1200px;
+	flex-wrap: wrap;
 	justify-content: space-between;
 	align-items: center;
 }
@@ -61,7 +61,9 @@ a {
 
 .navbar__options {
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
+	margin-left: .5em;
 }
 
 .datepikers,
@@ -75,9 +77,13 @@ a {
 .search__wrapper {
 	padding: 0 .5em;
 	border: 1px solid #CCC;
-	margin-left: .5em;
 	height: 35px;
 	border-radius: 4px;	
+}
+
+.datepiker__wrapper:last-child,
+.search__wrapper {
+	margin-left: .5em;
 }
 
 .datepiker__wrapper input,
@@ -95,7 +101,9 @@ a {
 	color: #717171;
 	font-size: 1.2em;
 }
-
+.search__wrapper input{
+	flex: 1;
+}
 .search__wrapper i {
 	cursor: pointer;
 }
@@ -325,7 +333,42 @@ a {
   padding-left: 1em;
 }
 
-/* Large devices (desktops, 992px and up) */
+@media(max-width: 768px) {
+	.main {
+		padding-top: 90px;
+	}
+
+	.navbar .logo{
+		height: 60px;
+	}
+	.navbar .container {
+		justify-content: center;
+	}
+	
+	.navbar__options {
+		margin-top: .5em;
+		margin-bottom: 1em;	
+		flex-direction: column-reverse;	
+	}
+
+	.datepikers {
+		width: 100%;
+		justify-content: space-between;
+	}
+
+	.search__wrapper {
+		width: 100%;
+		margin-bottom: .5em;
+		margin-left: 0;
+	}
+}
+
+@media(max-width: 562px) {
+	.main {
+		padding-top: 170px;
+	}
+}
+
 @media (min-width: 992px){ 
 	.map__wrapper {
 		width: 60%;
@@ -335,6 +378,8 @@ a {
 	.items__wrapper {
 		width: 40%;
 	}
+
+
 	.items .item .item__image {
 		width: 30%;	
 	}
