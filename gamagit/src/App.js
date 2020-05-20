@@ -1,21 +1,30 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  const [usuario, setUsuario] = useState('');
+  const [username, setUsername] = useState('');
+  
+  const hanleSearch = async () => {
+    const { data } = await axios.get(`https://api.github.com/users/${username}/repos`);
+    console.log(data)
+  }
 
   return (
     <>
       <input 
-        value={usuario}
-        onChange={e => setUsuario(e.target.value)}
+        value={username}
+        onChange={e => setUsername(e.target.value)}
         type='Usuário' 
-        name='usuario'
-        id='usuario'
+        name='username'
+        id='username'
         className="usuarioInput"/>   
 
-        <button type='button'>
+        <button 
+          onClick={hanleSearch}
+          type='button'>
           Pesquisar
         </button>   
     </>
