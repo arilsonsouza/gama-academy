@@ -6,6 +6,14 @@ export const Container = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	flex-direction: column;
+`;
+
+export const Content = styled.div`
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 `;
 
 export const Input = styled.input`
@@ -35,4 +43,12 @@ export const Button = styled.button`
 		outline: none;
 		box-shadow: none;
 	}
+`;
+
+export const ErrorMessage = styled.span`
+	display: block;
+	font-size: 0.65rem;
+	color: red;
+	font-weight: 600;
+	margin-top: 1rem;
 `;
