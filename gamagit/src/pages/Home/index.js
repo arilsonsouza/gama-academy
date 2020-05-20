@@ -8,7 +8,8 @@ export default function Home () {
   
   const hanleSearch = async () => {
     const { data } = await axios.get(`https://api.github.com/users/${username}/repos`);
-    console.log(data)
+    const repositories = data.map(({ id, name, url }) => ({ id, name, url }))
+    localStorage.setItem('repositories', JSON.stringify(repositories))
   }
 
 	return (
