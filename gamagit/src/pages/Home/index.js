@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+
 import axios from 'axios';
 
 import * as S from './styled';
 
 export default function Home () {
 	const [username, setUsername] = useState('');
-  
+    
+    const history = useHistory();
+
   const hanleSearch = async () => {
     const { data } = await axios.get(`https://api.github.com/users/${username}/repos`);
-    const repositories = data.map(({ id, name, url }) => ({ id, name, url }))
-    localStorage.setItem('repositories', JSON.stringify(repositories))
+    const repositories = data.map(({ id, name, url }) => ({ id, name, url }));
+    localStorage.setItem('repositories', JSON.stringify(repositories));
+    history.push('/repositories');
   }
 
 	return (

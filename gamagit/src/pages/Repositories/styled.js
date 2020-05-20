@@ -24,4 +24,10 @@ export const ListItem = styled.li`
 	background-color: #000;
 	color: #FFF;
 	padding: .5em;
+
+	a {
+		text-decoration: none;
+		color: #FFF;
+		font-size: 1.2rem;
+	}
 `;
