@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+import * as S from './styled';
+
 export default function Home () {
 	const [username, setUsername] = useState('');
   
@@ -8,10 +10,10 @@ export default function Home () {
     const { data } = await axios.get(`https://api.github.com/users/${username}/repos`);
     console.log(data)
   }
-  
+
 	return (
-		<>
-		 <input 
+		<S.Container>
+		 <S.Input 
       value={username}
       onChange={e => setUsername(e.target.value)}
       type='Usuário' 
@@ -19,11 +21,11 @@ export default function Home () {
       id='username'
       className="usuarioInput"/>   
 
-      <button 
+      <S.Button 
         onClick={hanleSearch}
         type='button'>
         Pesquisar
-      </button>  
-		</>
+      </S.Button>  
+		</S.Container>
 	);
 }
