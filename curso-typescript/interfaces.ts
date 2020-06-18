@@ -10,3 +10,7 @@ function getUser(): Usuario {
     email: 'contato@email.com'
   }
 }
+
+function setUser(usuario: Usuario) {
+  
+}
