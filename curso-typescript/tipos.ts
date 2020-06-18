@@ -91,6 +91,7 @@ function tratarFuncionarios(funcionarios: Funcionario[]) {
 }
 
 
+// Null or optional values
 let altura: number | null = 1.6;
 altura = null;
 
@@ -104,3 +105,12 @@ const contato: Contato = {
   nome: 'Arilson',
   telefone: '123456789'  
 }
+
+//  Type Asseertion
+const minhaIdade: any = 24;
+// (minhaIdade as number).toString();
+(<number>minhaIdade).toString();
+
+// const input = document.getElementById('numero1') as HTMLInputElement;
+const input = <HTMLInputElement>document.getElementById('numero1');
+console.log(input.value);
