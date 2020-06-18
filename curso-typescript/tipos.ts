@@ -43,3 +43,18 @@ function criar(object: object) {
 }
 
 criar({ proprieda: 1})
+
+// Never
+function loopInfinito (): never {
+  while(true) {
+
+  }
+}
+
+function error(msg: string): never {
+  throw new Error(msg);  
+}
+
+function falha(): never{
+  return error('Algo falhou')
+}
