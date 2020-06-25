@@ -16,8 +16,8 @@ export default function SignIn() {
 				password
 			})
 		}).then(res => res.json())
-			.then(() => {
-				console.log('Success')
+			.then(data => {
+				console.log('Success: ', data)
 			})
 	};
 
