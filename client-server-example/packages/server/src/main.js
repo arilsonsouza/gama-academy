@@ -13,7 +13,9 @@ server.get('/status',(_, res) => {
 server.post('/authenticate', (req, res) => {
 	console.log(req.body);
 
-	res.send();
+	res.send({
+		...req.body
+	});
 })
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3333;
