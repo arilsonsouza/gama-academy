@@ -42,8 +42,18 @@ export const typeDefs = gql`
 		email: String!
 	}
 
+	input UpdateClientInput {
+		id: ID!
+		name: String!
+		email: String!
+	}
+
 	extend type Mutation {
 		createClient(input: CreateClientInput!): Client
+		updateClient(input: UpdateClientInput!): Client
+		deleteClient(id: ID!): Client!
+		enableClient(id: ID!): Client!
+		disableClient(id: ID!): Client!		
 	}
 `;
 
@@ -137,6 +147,104 @@ export const resolvers = {
 			await clientRepository.write([...clients, client]);
 
 			return client;
-		}
+		},
+
+		updateClient: async (_, { input }) => {
+			const clients = await clientRepository.read();
+			const currentClient = clients.find(client => client.id === input.id);
+			if (!currentClient) {
+				throw new Error(`No client found with this id "${input.id}"`)
+			}
+
+			const updateClient = {
+				...currentClient,
+				name: input.name,
+				email: input.email,				
+			};
+			
+			const updateClients = clients.map(client => {
+				if (client.id === updateClient.id) {
+					client = updateClient;
+				}
+
+				return client;
+			});
+
+			await clientRepository.write(updateClients);
+
+			return updateClient;
+		},
+
+		deleteClient: async (_, { id }) => {
+			const clients = await clientRepository.read();
+			const client = clients.find(client => client.id === id);
+
+			if (!client) {
+				throw new Error(`No client found with this id "${id}"`);
+			}
+			
+			const updateClients = clients.filter(client => client.id !== id);
+			await clientRepository.write(updateClients);
+
+			return client
+		},
+
+		enableClient: async (_, { id }) => {
+			const clients = await clientRepository.read();
+			const currentClient = clients.find(client => client.id === id);
+			if (!currentClient) {
+				throw new Error(`No client found with this id "${id}"`);
+			}
+
+			if (!currentClient.disabled) {
+				throw new Error(`Client "${id}" is already enabled`);
+			}
+
+			const updateClient = {
+				...currentClient,
+				disabled: false				
+			};
+			
+			const updateClients = clients.map(client => {
+				if (client.id === updateClient.id) {
+					client = updateClient;
+				}
+
+				return client;
+			});
+
+			await clientRepository.write(updateClients);
+
+			return updateClient;
+		},
+
+		disableClient: async (_, { id }) => {
+			const clients = await clientRepository.read();
+			const currentClient = clients.find(client => client.id === id);
+			if (!currentClient) {
+				throw new Error(`No client found with this id "${id}"`);
+			}
+
+			if (currentClient.disabled) {
+				throw new Error(`Client "${id}" is already disabled`);
+			}
+
+			const updateClient = {
+				...currentClient,
+				disabled: true				
+			};
+			
+			const updateClients = clients.map(client => {
+				if (client.id === updateClient.id) {
+					client = updateClient;
+				}
+
+				return client;
+			});
+
+			await clientRepository.write(updateClients);
+
+			return updateClient;
+		},
 	}
 }
