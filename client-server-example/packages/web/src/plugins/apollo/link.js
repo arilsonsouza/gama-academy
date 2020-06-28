@@ -4,14 +4,16 @@ import { setContext } from 'apollo-link-context';
 import { onError } from 'apollo-link-error';
 
 const loggerLink = new ApolloLink((operation, forward) => new Observable((observer) => {
-	forward(operation).subscribe({
+	const subscritpion = forward(operation).subscribe({
 		next: result => {
 			console.log(`Log: `, result);
 			observer.next(result);
 		},		
-		complete: observer.complete.bind(observer),
+		complete: observer.error.bind(observer),
 		error: observer.complete.bind(observer),
 	});
+
+	return () => subscritpion.unsubscribe();
 }));
 
 const link = ApolloLink.from([
