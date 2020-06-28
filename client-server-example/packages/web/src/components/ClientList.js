@@ -20,7 +20,7 @@ const GET_CLIENT_LIST  = gql`
 
 const PAGE_SIZE = 10;
 
-export default function ClientList() {
+export default function ClientList({onSelectClient}) {
 	
 	const {
 		error,
@@ -39,6 +39,8 @@ export default function ClientList() {
 
 	const clients = data?.clients.items ?? [];
 	
+	const handleSelectClient = (client) => () => onSelectClient?.(client.id);
+
 	const handleLoadMore = () => {
     fetchMore({
       variables: {
@@ -70,7 +72,7 @@ export default function ClientList() {
 		);
 	}
 
-	if (loading) {
+	if (loading && !data) {
 		return (
 			<section>
 				<p>Carregando...</p>
@@ -82,13 +84,17 @@ export default function ClientList() {
 		<section>
 			<ul>
 				{ clients.map(client => (
-					<li key={client.id}>
+					<li
+						style={{ cursor: 'pointer' }}
+						onClick={handleSelectClient(client)}
+						key={client.id}>
 						<p>{client.name}</p>
 						<p>{client.email}</p>
 					</li>)
 				)}
 			</ul>
 			<button
+				type='button'
 				onClick={handleLoadMore}
 				disabled={loading}
 			>
