@@ -1,3 +1,1 @@
-export {
-  
-}
+export { default as pokemonConstants } from './pockemon';

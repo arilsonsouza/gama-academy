@@ -1,4 +1,1 @@
-
-export {
-  
-}
+export * from './pokemon';
