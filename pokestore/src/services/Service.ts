@@ -92,9 +92,6 @@ $axiosInstance.interceptors.response.use(function (response): any {
   return Service.handleError(error)
 })
 
-// let { data } = $axiosInstance.post('/login', { login: 'jimmybastos@yandex.com', new_password: '123456' })
-// console.log(data)
-
 Service.$axios = $axiosInstance
 
 export { $axiosInstance }
