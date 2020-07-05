@@ -1,5 +1,43 @@
 .home__wrapper {
-  .content__wrapper {
+  transition: margin-left .5s;
+  .content__wrapper,
+  .navbar {
     max-width: 960px;
+  }
+
+  .content__wrapper {
+    margin-top: 5em;
+  }
+
+  .cart__quantity {
+    right: 0;
+    background-color: #7f7f7f;
+    padding: .09em 0.1em;
+    top: -5px;
+    color: #FFF;
+    font-size: 12px;
+  }
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0; 
+  background-color: rgba(0, 0, 0, .5);
+  overflow-x: hidden;
+  // transition: 0.5s;    
+  &.sidenav--is_open {
+    width: 100%
+  }
+
+  .sidenav__content {   
+    width: 300px;
+    right: 0;
+    position: absolute;
+    height: 100%;
+    background-color: whitesmoke;
   }
 }

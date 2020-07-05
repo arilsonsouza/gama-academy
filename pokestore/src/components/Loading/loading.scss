@@ -14,17 +14,17 @@
   &__text {
     animation-delay: 100ms;
     animation: text-glow 1400ms infinite ease-in;
-    color: #1db954;
+    color: #63b3ed;
     font-family: 'Raleway', sans-serif;
     font-size: 12px;
     font-weight: bold;
     text-align: center;
-    text-shadow: 0 0 0 #1ed760;
+    text-shadow: 0 0 0 #63b3ed;
   }
 
   span {
     animation: soundBar 1400ms infinite ease-in-out;
-    background: #1db954;
+    background: #63b3ed;
     border-radius: 2px;
     bottom: 0;
     display: block;
@@ -74,19 +74,19 @@
 
   @keyframes soundBar {
     0% {
-      background: #1db954;
+      background: #63b3ed;
       height: 2px;
     }
     20% {
-      background: #1ed760;
+      background: #63b3ed;
       height: 70px;
     }
     40% {
-      background: #1db954;
+      background: #63b3ed;
       height: 2px;
     }
     60% {
-      background: #1db954;
+      background: #63b3ed;
       height: 2px;
     }
   }
@@ -94,15 +94,15 @@
 
 @keyframes text-glow {
   0% {
-    color: #1db954;
-    text-shadow: 0 0 0 #1db954;
+    color: #63b3ed;
+    text-shadow: 0 0 0 #63b3ed;
   }
   50% {
-    color: #1ed760;
-    text-shadow: 0 0 5px #1ed760;
+    color: #63b3ed;
+    text-shadow: 0 0 5px #63b3ed;
   }
   100% {
-    color: #1db954;
-    text-shadow: 0 0 0 #1db954;
+    color: #63b3ed;
+    text-shadow: 0 0 0 #63b3ed;
   }
 }

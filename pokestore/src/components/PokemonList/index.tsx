@@ -10,7 +10,7 @@ const PokemonList = ({ pokemon }) => {
         {pokemon.map((item, index) => (
           <div
             key={index}
-            className='tw-w-full sm:tw-w-1/2 md:tw-w-1/4 tw-flex tw-justify-center tw-mb-8 tw-p-1'>
+            className='tw-w-full sm:tw-w-1/2 md:tw-w-1/3 lg:tw-w-1/4 tw-flex tw-justify-center md:tw-justify-start tw-mb-4 tw-p-1'>
             <PokeCard {...item }/>    
           </div>
         ))}
