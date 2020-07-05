@@ -127,7 +127,7 @@ export default function Home() {
             <>
              <div className='tw-w-full'>
               <Modal
-                text='Obgrigado pela sua pokecompra!'
+                text='Obrigado pela sua pokecompra!'
                 isOpen={isOpen}
                 handleClose={() => setIsOpen(false)}
               />
