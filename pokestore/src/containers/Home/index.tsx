@@ -21,7 +21,7 @@ export default function Home() {
   let cartItems = useSelector(state => state.cart.items);
 
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(20);
+  const limit = 20;
   const [isLoading, setIsLoading] = useState(false);
 
   const generatePokePrice = (min = 40, max = 50) => {
@@ -92,7 +92,7 @@ export default function Home() {
           > 
             &times;
           </button>
-          <span className='tw-text-gray-600'>Poke carrinho</span>
+          <span className='tw-text-gray-600'>PokeCarrinho</span>
         </div>
         <div className='tw-h-full'>
           <Cart closeCart={closeCart}/>
@@ -121,13 +121,13 @@ export default function Home() {
         </div>
       </div>
       <div className='content__wrapper tw-w-4/5'>
-        {isLoading && pokemon.length === 0 
+        {isLoading && filteredItems.length === 0 
           ? <Loading/>
-          : (
+          : filteredItems.length > 0 ? (
             <>
              <div className='tw-w-full'>
               <Modal
-                text='Obgrigado por comprar com a gente!'
+                text='Obgrigado pela sua pokecompra!'
                 isOpen={isOpen}
                 handleClose={() => setIsOpen(false)}
               />
@@ -143,7 +143,10 @@ export default function Home() {
                 </button>
               </div>
             </>
-        )}
+          ) : <div className='tw-flex tw-justify-center'>
+                <p className='tw-text-gray-600 tw-text-2xl'>Nenhum pokemon encontrado :(</p>
+              </div>
+        }
       </div>
     </div>
     </>

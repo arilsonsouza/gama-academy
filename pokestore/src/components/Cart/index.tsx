@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types'
 
 import CartItem from '../CartItem';
-import Modal from '../Modal';
 
 import { groupBy, floatToCurrency } from '../../helpers';
 
@@ -46,8 +45,8 @@ const Cart = ({closeCart}) => {
 			</div>
 			{ totalPrice > 0 && 
 				<div className='tw-w-full tw-flex tw-flex-wrap tw-absolute tw-bottom-0'>
-					<div className='tw-w-full tw-flex tw-justify-center tw-bg-gray-500 tw-text-white tw-font-bold tw-py-2 tw-px-4'>
-						{floatToCurrency(totalPrice)}
+					<div className='tw-w-full tw-flex tw-justify-between tw-bg-gray-500 tw-text-white tw-font-bold tw-py-2 tw-px-4'>
+						<span>TOTAL</span> <span>{floatToCurrency(totalPrice)}</span>
 					</div>
 					<div className='tw-w-full'>						
 				 		<button				 		
